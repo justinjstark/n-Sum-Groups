@@ -1,0 +1,333 @@
+\documentclass[12pt]{amsart}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{verbatim}
+
+
+%Theorems & Environments
+\newtheorem{theorem}{Theorem}
+\newtheorem{claim}{Claim}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{question}[theorem]{Additional questions}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{gendef}[theorem]{General Definitions}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{conclusion}[theorem]{Conclusion}
+\newtheorem{remark}[theorem]{Remark}
+
+
+%Commands
+\renewcommand{\implies}{\Rightarrow}
+\renewcommand{\emptyset}{\varnothing}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbE}{\mathbb{E}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbZ}{\mathbb{Z}}
+
+\renewcommand{\labelenumi}{(\roman{enumi})}
+
+\title{n-Sum Groups}
+\author{Nicholas Packauskas}
+\author{Justin J Stark}
+\email{jstark@math.ku.edu}
+\urladdr{http://www.justinjstark.com}
+\date{December 3, 2010}
+
+\begin{document}
+
+\begin{abstract}
+We analyze when a group can be written as the product of its proper subgroups.  We follow the work of Cohn by proving the necessary machinery in detail and then proving some of the main theorems, including the necessary and sufficient conditions for writing groups as a product of \( 2 \) through \( 4 \) subgroups.  This paper was written as part of a class project.
+\end{abstract}
+
+\maketitle
+ 
+In the homework, we were asked to answer the following problem.
+
+\begin{problem}
+\label{pr.2sum}
+Suppose \( G \) is a group and \( G = H \cup K \) where \( H \) and \( K \) are subgroups of \( G \).  Show that \( H = G \) or \( K = G \).
+\end{problem}
+
+We also discussed the next problem briefly in class.
+
+\begin{problem}
+\label{pr.3sum}
+Suppose \( G \) is a finite group and \( G = H \cup K \cup L \) for proper subgroups \( H \), \( K \), and \( L \).  Show that \( |G:H| = |G:K| = |G:L| = 2 \).
+\end{problem}
+
+A question was raised about the generalization of these two problems.  In this paper we will explore when a group can be written as the union of proper subgroups.  We will use \cite{JHCo94} as a guide throughout.
+ 
+\begin{definition}
+A group \( G \) which can be written as the set-theoretic union of at the least \( n \) proper subgroups is called an \( n \)-sum group and we write \( \sigma(G) = n \).
+\end{definition}
+
+Furthermore, if \( G \) is an \(n\)-sum group then we write \( G = \bigcup_{i = 1}^{n} H_i \) where each \(H_i\) is a proper subgroup, and without loss of generality, we arrange the subgroups so that \( |G:H_i| \leq |G: H_{i+1}|\).  We will take all \(n\)-sum groups to be written in this ordered way hereafter.
+
+\begin{definition}
+A group \( G \) is a primitive \( n \)-sum group if \( \sigma(G) = n \) and there is no normal subgroup \( N \) of \( G \) such that \( \sigma(G/N) = n \).
+\end{definition}
+
+As we continue, we will reveal the usefulness of primitive \(n\)-sum groups in classifying \(n\)-sum groups.
+
+\begin{lemma}
+\label{lm.primineq}
+If \( G \) is a group and \( N \) is normal in \( G \) such that \( G/N \) is an \(n\)-sum group then \( 1 < \sigma(G) \leq \sigma(G/N) \).
+\end{lemma}
+\begin{proof}
+Suppose \( \sigma(G/N) = n \).  Then \( G/N = \bigcup_{i=1}^n H_i \).  Since each \( H_i \) is a subgroup of \( G/N \) we get that each \( H_i = J_i/N \) for some subgroup \( J_i \) of \( G \).  Hence we can write \( G/N = \bigcup_{i=1}^n J_i/N \).
+
+Now, let \( g \in G \).  Then \( gN \in G/N \) and hence \( gN \in J_i/N \) for some \( i \).  Hence \( gN = j_iN \) for some \( j_i \in J_i \).  And thus \( g = j_in \in J_i \) since \( N \) is a subgroup of \( J_i \).  So \( g \in \bigcup_{i=1}^n J_i \).  Therefore \( G = \bigcup_{i=1}^n J_i \).
+
+Since \( J_i/N < G/N \) then \( J_i < G \).  However, even though \( J_i/N \neq J_j/N \) for \( i \neq j \), it could be that \( J_i = J_j \).  Therefore we can write \( G \) as the union of \emph{at most} \( n \) subgroups and we conclude that \( \sigma(G) \leq n \).
+\end{proof}
+
+This lemma gives us a nice tool to analyze \(n\)-sum groups.  If we have a group \( G \), all we have to do is verify that \emph{any one} of its quotient groups is an \(n\)-sum group and then we know that \( G \) itself is an \(n\)-sum group (perhaps for a smaller \(n\)).
+
+\begin{theorem}
+A finite group \( G \) is an \(n\)-sum group if and only if it is noncyclic.
+\end{theorem}
+\begin{proof}
+First, suppose \( G \) is cyclic and an \(n\)-sum group. Then \( G = \cup_{i=1}^n H_i \).  But \( G \) is generated by an element \( g \) and \( g \in H_i \) for some \( i \) so it must be that \( \langle g \rangle \subseteq H_i \).  Hence \( H_i \) must be the whole group, a contradiction.  So any cyclic group is not an \(n\)-sum group.
+
+Now suppose \( G \) is noncyclic.  Then \( G \) is isomorphic to a finite union of cyclic subgroups by simply taking the union of the subsets generated by each element in \( G \).  Every subgroup must be proper and hence \( G \) is an \(n\)-sum group.
+\end{proof}
+
+For the remainder of this discussion we will assume that every group we work with is finite and noncyclic.
+
+It will be productive to relate the order of an n-sum group to the order of its subgroups.
+
+\begin{theorem}
+\label{th.ineq}
+If \(G = \bigcup_{r=1}^{n} H_r\) then \(|G| \leq \sum_{r=2}^{n} |H_r|\).
+\end{theorem}
+\begin{proof}
+For any \(2 \leq r \leq n\), the number of elements contained in \(H_r\) but not \(H_1\) is
+\begin{align}
+	|H_{r}| - |H_{1} \cap H_{r}| &= |H_{r}| \left( 1 - \frac{|H_{1}|}{|H_{1}H_{r}|} \right) \notag\\
+	&\leq |H_{r}| \left( 1 - \frac{|H_{1}|}{|G|} \right) \label{eq.ineq}
+\end{align}
+
+Summing over \(r\) gives
+\[ |G| \leq |H_{1}| + \left( 1 - \frac{|H_{1}|}{|G|} \right) \sum_{r=2}^{n} |H_{r}|\]
+
+Now, suppose by way of contradiction that \(|G| > \sum_{r=2}^{n} |H_{r}|\).  The contradiction follows immediately as
+\[|G| < |H_{1}| + \left( 1 - \frac{|H_1|}{|G|} \right) |G| = |H_{1}| + |G| - |H_{1}| = |G|\]
+
+Hence it must be that \(|G| \leq \sum_{r=2}^{n} |H_{r}|\).
+\end{proof}
+
+Now, using the Theorem and the way we have ordered the subgroups we get the following Lemma:
+
+\begin{lemma}
+\label{lm.ineq}
+If \( G \) is an \( n \)-sum group then \(|G:H_2| \leq n - 1\)
+\end{lemma}
+\begin{proof}
+Suppose, by way of contradiction, that \( |G:H_2| \geq n \).  Then, by the order of the subgroups, we have \( |G:H_i| \geq n \) for any \( i \geq 2 \).  Hence \( |H_i| \leq |G|/n \) for any \( i \geq 2 \).
+
+By the previous theorem, \( |G| \leq \sum_{i=2}^n |H_r| \leq (n-1)|G|/n < |G| \).  This is a contradiction.
+\end{proof}
+
+Following this Lemma, we see that no finite group \( G \) is a \(2\)-sum group, answering the finite case of Problem~\ref{pr.2sum}.
+
+We will now prove the following lemma which we will use in our theorems for \(3\)-sum and \(4\)-sum groups.
+
+\begin{lemma}
+\label{lm.quot}
+Let \( G \) be a group and let \( M \) and \( N \) be normal subgroups of \( G \) such that \( G = MN \). Then \( G/(M \cap N) \simeq (G/M) \times (G/N) \).
+\end{lemma}
+\begin{proof}
+Since every \( g \in G \) can be written as \( g = mn \) for some \( m \in M \) and \( n \in N \), we define the mapping \( \phi:G \to M/(M \cap N) \times N/(M \cap N) \) by \( \phi(mn) = (m(M \cap N), n(M \cap N)) \).  It can be shown that \( \phi \) is well-defined and surjective and \( \ker{\phi} = M \cap N \).
+
+Then by the first homomorphism theorem, we get that \( G/(M \cap N) \simeq N/(M \cap N) \times M/(M \cap N) \).  And by the second homomorphism theorem, we get that \( G/M \simeq N/(M \cap N) \) and \( G/N \simeq M/(M \cap N) \).  Hence \( G/(M \cap N) \simeq G/M \times G/N \).
+\end{proof}
+
+Now we have all the tools we need to give the main theorems of Cohn.  So we will start with \(3\)-sum groups.
+
+\begin{example}
+The group \( C_2 \times C_2 \) is a \(3\)-sum group.
+\end{example}
+\begin{proof}
+\( C_2 \times C_2 = \langle 1,0 \rangle \cup \langle 1,1 \rangle \cup \langle 0, 1 \rangle \)
+\end{proof}
+
+\begin{theorem}
+\label{th.3sum}
+A group \( G \) is a \( 3 \)-sum group if and only if \( G \) has as least two subgroups of index \( 2 \).
+\end{theorem}
+\begin{proof}
+Suppose \( \sigma(G) = 3 \) and write \( G = H_1 \cup H_2 \cup H_3 \) as usual.  By Lemma~\ref{lm.ineq} we get that \( |G:H_2| \leq 2 \).  Then the ordering of the subgroups gives us \( 1 < |G:H_1| \leq |G:H_2| \leq 2 \).  So \( |G:H_1| = |G:H_2| = 2 \).
+
+Conversely, suppose \( H_1 \) and \( H_2 \) are distinct subgroups of \( G \) with index \(2\).  Then \( H_1 \) and \( H_2 \) are normal in \( G \).  Since they have index \(2\) then \( G = H_1 H_2 \).  By Lemma~\ref{lm.quot}, \( G/N \simeq C_2 \times C_2 \).  Hence \( \sigma(G/N) = 3 \).  By Lemma~\ref{lm.primineq} it follows that \( \sigma(G) \leq \sigma(G/N) = 3 \) and thus \( \sigma(G) = 3 \) since it cannot be \( 2 \).
+\end{proof}
+
+We have also just shown that any \( 3 \)-sum group is quotient isomorphic to \( C_2 \times C_2 \).  Scorza in \cite{GZa91} was the first to show this.  It follows that \( C_2 \times C_2 \) is the only primitive \( 3 \)-sum group.
+
+\begin{lemma}
+\label{lm.3sum}
+Let \( G \) be a \( 3 \)-sum group with \( G = H_1 \cup H_2 \cup H_3 \).  If \( |G:H_2| = |G:H_3| = 2 \) then \( |G:H_1| = 2 \).
+\end{lemma}
+\begin{proof}
+By Theorem~\ref{th.ineq}, \( |G| \leq |H_2| + |H_3| = |G|/2 + |H_3| \).  So \( |G|/|H_3| \leq 2 \) and thus \( |G:H_3| = 2 \) since \( H_3 \) is a proper subgroup.
+\end{proof}
+
+Lemma~\ref{lm.3sum} along with Theorem~\ref{th.3sum} yields a proof of Problem~\ref{pr.3sum}.
+
+Now on to \(4\)-sum groups.
+
+\begin{example}
+The groups \(S_3\) and \( C_3 \times C_3 \) are \(4\)-sum groups.
+\end{example}
+\begin{proof}
+\(S_3 = \langle (1 2 3) \rangle \cup \langle (1 2) \rangle \cup \langle (2 3) \rangle \cup \langle (1 3) \rangle \).  \(|S_3 : \langle (1 2 3) \rangle| = 2\).  The other subgroups are of index \(3\).
+
+\( C_3 \times C_3 = \langle 1,0 \rangle \cup \langle 0,1 \rangle \cup \langle 1,1 \rangle \cup \langle 2,1 \rangle \) with each subgroup is of index \(3\).
+\end{proof}
+
+In fact, these two examples are the only primitive \( 4 \)-sum groups.
+
+\begin{theorem}
+\label{th.4sum}
+If a group \( G \) is a \(4\)-sum group then \( \sigma(G) \neq 3 \) and \( G \) has at least two subgroups of index \( 3 \).
+\end{theorem}
+\begin{proof}
+Suppose \( \sigma(G) = 4 \) and write \( G = \bigcup_{i=1}^4 H_i \).  By Lemma~\ref{lm.ineq} we get \( |G:H_2| \leq 3 \).  By the ordering of the subgroups we have \( 1 < |G:H_1| \leq |G:H_2| \leq 3 \).  If \( |G:H_2| = 2 \) then also \( |G:H_1| = 2 \) and by Theorem~\ref{th.3sum} we get that \( \sigma(G) = 3 \).  So it must be that \( |G:H_2| = 3 \).  By Theorem~\ref{th.ineq} we have \( |G| \leq \sum_{i=2}^4 |H_i| = |G|/3 + |H_3| + |H_4| \) and thus \( 2|G|/3 \leq |H_3| + |H_4| \).  Also, by the ordering of the subgroups, \( |H_3| \leq |G|/3 \) and \( |H_4| \leq |G|/3 \).  Hence \( |G:H_3| = |G:H_4| = 3 \).
+
+Conversely, suppose \( A \) and \( B \) are subgroups of \( G \) with index \( 3 \).  We work out the following two cases.
+
+(1) Suppose \( A \) and \(B\) are both normal in \( G \).  First, note that \( |A| = |G|/3 \) divides but is not equal to \( |AB| \) and hence \( |AB| = |G| \) meaning \( G = AB \).  Also, \( A \cap B \) is normal, \( G/A \simeq C_3 \), and \( G/B \simeq C_3 \).  So we can apply Lemma~\ref{lm.quot} and get \( G/(A \cap B) \simeq C_3 \times C_3 \) which is a \(4\)-sum group.  By Lemma~\ref{lm.primineq} we get that \( \sigma(G) \leq \sigma(G/(A \cap B)) = 4 \) and since \( \sigma(G) \neq 3 \) we get \( \sigma(G) = 4 \).
+
+(2) Suppose WLOG that \( A \) is not normal in \( G \).  Let \( N \) be the maximal subgroup of \( A \) which is normal in \( G \).  Let \( G \) act by right multiplication on the set \( \Omega = \{ Ag: g \in G \} \).  By Corollary~\(4.3\) in Isaacs \cite{IMIs94} we get that \( G/N \) can be isomorphically embedded in \( S_3 \).  Since \( |G:A| = 3 \) the order of the conjugate class of \( A \) is \( 3 \) so let \( J \) and \( K \) be these other conjugates.  Note that since \( N \) is normal and \( N \subset A \) then \( N \subset J \) and \( N \subset K \).  It follows that \( A/N, J/N, \) and \( K/N \) are each contained in \( G/N \) with equal index.  Therefore, it must be that \( G/N \simeq S_3 \) which is also a \(4\)-sum group.  As in case (1), we get \( \sigma(G) = 4 \).
+\end{proof}
+
+\begin{theorem}
+\label{th.5sum}
+A group \( G \) is a \(5\)-sum group if and only if \( \sigma(G) \neq 3 \), \( \sigma(G) \neq 4 \), and	\( G \) has a maximal subgroup of index \( 4 \). 
+\end{theorem}
+\begin{proof}
+Suppose \( \sigma(G) = 5 \).  By Lemma~\ref{lm.ineq} we get that \( |G:H_2| \leq 4 \).  Also, \( |G:H_2| \neq 2 \) or else \( \sigma(G) = 3 \).
+
+Consider the case of \( |G:H_2| = 3 \).  If \( |G:H_3| > 4 \) then by Theorem~\ref{th.ineq} we get that \( |G| \leq \sum_{i=2}^n |H_i| \leq |G|/3 + \sum_{i=3}^n |G|/5 < |G| \), a contradiction.  Hence \( |G:H_3| \leq 4 \).  Also, \( |G:H_3| \neq 3 \) as this would yield \( \sigma(G) = 4 \).  So it must be that \( |G:H_3| = 4 \).
+
+The maximal part follows from the ordering of the subgroups.
+\end{proof}
+
+Cohn proved the converse of this theorem is also true.  The result is long and will not be presented in this paper.  We do, however, give the following example of a \(5\)-sum group.
+
+\begin{example}
+The alternating group \(A_4\) is a \(5\)-sum group.
+\end{example}
+\begin{proof}
+\(A_4 = \langle (1 2)(3 4), (1 3)(2 4)\rangle \cup \langle (1 2 3)\rangle \cup \langle(1 2 4)\rangle \cup \langle(1 3 4)\rangle \cup \langle(2 3 4)\rangle\).  The first group has index \(3\), the rest have index \(4\). 
+\end{proof}
+
+It turns out that \(A_4\) is the only primitive \(5\)-sum group.
+
+Cohn proved the following theorem for \(6\)-sum groups.
+
+\begin{theorem}
+\label{th.6sum}
+If \( G \) is a \(6\)-sum group then
+\begin{enumerate}
+	\item \( |G:H_1| \in \{ 2,5 \} \)
+	\item \( |G:H_i| = 5 \) for \( 2 \leq r \leq 6 \)
+\end{enumerate}
+\end{theorem}
+
+Again, we do not present the result here but we give an example of a \(6\)-sum group.
+
+\begin{example}
+The group \(C_5 \times C_5\) is a \(6\)-sum group.
+\end{example}
+\begin{proof}
+\(C_5 \times C_5 = \langle 0, 1 \rangle \cup \langle 1, 0 \rangle \cup \langle 1, 1 \rangle \cup \langle 1 , 2 \rangle \cup \langle 2, 1 \rangle \cup \langle 2, 3 \rangle\).  Each subgroup has index \(5\).
+\end{proof}
+
+\begin{theorem}
+\label{th.7sum}
+There is no \(7\)-sum group.
+\end{theorem}
+
+The proof of this theorem is complex and will not be presented here.  It was a conjecture by Cohn in \cite{JHCo94} and later proved by Tomkinson in \cite{MJTo97}.
+
+The next logical question is are there any \(8\)-sum groups?  How about \(9\)-sum?  There are certainly \(n\)-sum groups where \( n > 7 \).
+
+\begin{example}
+\( A_5 \) is a \(10\)-sum group.
+\end{example}
+\begin{proof}
+The alternating group \(A_5\) contains 1 element of order 1, 15 elements of order 2 (products of 2-cycles), 20 elements of order 3 (3-cycles),  and 24 elements of order 5 (5-cycles).  Now, since \(A_5\) is simple, if \(H\) is a proper subgroup containing an element of order 5, then \(H\) contains no elements  of order 3, otherwise \(|H| \geq 15\). Likewise, there is no proper subgroup containing two 5-cycles which are not powers of one another.  Since there are 6 collections of powers of 5-cycles, at least 6 subgroups are necessary to contain all the the elements of order 5.  It is possible to choose these 6 subgroups so that they also contain the elements of order 2, e.g. set \(H_1 = \langle (12345), (13)(45)\rangle\,\)  Now, let \(J\) be a proper subgroup containing an element of order 3. Then \(|Y| = 3, 6\) or \(12\). But, if \(J\) contains elements of order 3 that involve all of the numbers being permuted, then \(J\) is forced to contain an element of order 5.  Thus, we must split the elements of order 3 among 4 proper subgroups, specifically we may use the alternating groups on \(\{ 1, 2, 3, 4\}, \{1, 2, 3, 5\}, \{1, 2, 4, 5\}, \{1, 3, 4, 5\}\).  Thus, the smallest number of groups we can use is 10, hence \(\sigma(A_5) = 10\).
+\end{proof}
+
+More general results of \( n \)-sum groups are still desired.  Bhargava in \cite{MiBh09} looked at all primitives for \(n\)-sum groups where \( n \leq 7 \) and made the following conjecture.
+
+\begin{conjecture}
+For each \( n \), there is a finite set \( P_n \) of primitive \(n\)-sum groups and any \( n \)-sum group is quotient isomorphic to some \( K \in P_n \).
+\end{conjecture}
+
+\begin{comment}
+\begin{conjecture}
+For any positive integer \( n \), there exists a minimal, finite set \( I_n \) of \(n\)-sum groups such that \( G \) is quotient isomorphic to some group \( K \in I_n \) if and only if \( \sigma(G) = n \).
+\end{conjecture}
+\end{comment}
+
+It is clear that the conjecture holds for at least \( n \leq 7 \) because Cohn showed that the primitive subgroups are
+\begin{align*}
+P_1 = P_2 = P_7 &= \emptyset\\
+P_3 &= \{ C_2 \times C_2 \}\\
+P_4 &= \{ S_3, C_3 \times C_3 \}\\
+P_5 &= \{ A_4 \}\\
+P_6 &= \{ D_5, C_5 \times C_5, W \}
+\end{align*}
+where \( W \) is the group of order \( 20 \) defined by \( a^5 = b^4 = \{ e \} \) and \( ba = a^2b \).
+
+Proof of this conjecture for all \( n \) would give a nice classification of all \(n\)-sum groups.
+
+
+\begin{thebibliography}{10}
+
+\bibitem{MiBh09}
+Mira Bhargava.
+\newblock {Groups as Unions of Proper Subgroups.}
+\newblock {\em American Mathematical Monthly}, 116:413--422, 2009.
+
+\bibitem{JHCo94}
+J. H. E. Cohn.
+\newblock {On n-Sum Groups.}
+\newblock {\em Scand}, 75:44--58, 1994.
+
+\bibitem{IMIs94}
+I. M. Isaacs.
+\newblock {Algebra, A Graduate Course, 1st ed.}
+\newblock Brooks/Cole, Pacific Grove, California, 1994.
+
+\bibitem{MJTo97}
+M. J. Tomkinson.
+\newblock {Groups as the Union of Proper Subgroups.}
+\newblock {\em Scand}, 81:191--198, 1997.
+
+\bibitem{GZa91}
+G. Zappa.
+\newblock {The Papers of Gaetano Scorza on Group Theory (Italian).}
+\newblock {\em Accad. Naz. Lincei Cl. Sci. Fis. Mat. Natur. Rend. (9) Mat. Appl.}, 2:95--101, 1991.
+
+\end{thebibliography}
+ 
+\end{document}
